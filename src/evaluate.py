@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from scipy.stats import binomtest
 from sklearn.metrics import (
     accuracy_score,
     auc,
@@ -48,6 +49,25 @@ def metrics_table(results: dict[str, dict[str, float]], save_as: str | None = "m
     if save_as:
         table.to_csv(RESULTS_DIR / save_as)
     return table
+
+
+def mcnemar_test(y_true, pred_a, pred_b) -> dict[str, float]:
+    """Exact McNemar test comparing two classifiers' predictions on the same set.
+
+    Counts the discordant pairs (one model right where the other is wrong) and
+    returns an exact p-value from the binomial test on those pairs. A small
+    p-value means the two models' error patterns differ significantly.
+    """
+    y_true = np.asarray(y_true)
+    a_correct = np.asarray(pred_a) == y_true
+    b_correct = np.asarray(pred_b) == y_true
+    b = int(np.sum(a_correct & ~b_correct))  # A right, B wrong
+    c = int(np.sum(~a_correct & b_correct))  # A wrong, B right
+    n = b + c
+    p_value = binomtest(min(b, c), n, 0.5).pvalue if n > 0 else 1.0
+    chi2_cc = (abs(b - c) - 1) ** 2 / n if n > 0 else 0.0
+    return {"b (A_right_B_wrong)": b, "c (A_wrong_B_right)": c,
+            "chi2_cc": chi2_cc, "p_value": p_value}
 
 
 def plot_confusion_matrix(y_true, y_pred, model_name: str, save: bool = True):

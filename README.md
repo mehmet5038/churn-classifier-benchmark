@@ -88,6 +88,8 @@ All randomness is seeded with `random_state = 42` for reproducibility.
   tuned with `GridSearchCV` over 5-fold stratified CV, scored on ROC-AUC.
 - **Evaluation**: Accuracy, Precision, Recall, F1, ROC-AUC; confusion matrices;
   combined ROC and precision-recall curves; feature-importance and SHAP analysis.
+- **Stability & significance**: 5-fold CV ROC-AUC mean±std per model, plus a
+  McNemar test between the two top models.
 - **Imbalance study**: baseline vs. SMOTE vs. class-weighting on the best model.
 
 ## License / attribution

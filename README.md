@@ -40,6 +40,7 @@ churn-classifier-benchmark/
 │   └── churn_analysis.ipynb # the full narrative: EDA → modeling → evaluation
 ├── figures/                 # exported plots used in the report
 ├── results/                 # exported metric tables (CSV)
+├── report/                  # final submitted report (IEEE PDF)
 ├── environment.yml
 ├── requirements.txt
 └── README.md

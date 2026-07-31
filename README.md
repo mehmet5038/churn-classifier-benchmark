@@ -1,17 +1,15 @@
 # churn-classifier-benchmark
 
-A comparative data-mining study on the **Telco Customer Churn** dataset. Five
-classifiers — Decision Tree, Gaussian Naïve Bayes, k-Nearest Neighbors, Random
-Forest, and XGBoost — are trained, tuned, and compared on the task of predicting
-whether a telecom customer will churn. The study also examines how **class
-imbalance** handling (SMOTE vs. class weighting vs. baseline) affects the
-precision/recall trade-off.
+A comparative data-mining study on the Telco Customer Churn dataset. It trains and
+tunes five classifiers (Decision Tree, Gaussian Naïve Bayes, k-Nearest Neighbors,
+Random Forest, and XGBoost) and compares how well they predict whether a telecom
+customer will churn. It also looks at how the choice of imbalance handling (SMOTE,
+class weighting, or nothing) shifts the precision/recall trade-off.
 
 ## Course
 
-**BIL 476 — Data Mining** (Summer 2026), TOBB University of Economics & Technology.
-Individual term project. Topic: **Classification**. Task type:
-binary classification. Implementation language: Python.
+BIL 476 (Data Mining), Summer 2026, TOBB University of Economics and Technology.
+Individual term project. Topic: classification (binary). Written in Python.
 
 ## Dataset
 
@@ -65,7 +63,7 @@ pip install -r requirements.txt
 
 ## Reproduce the results
 
-1. (Optional) fetch the dataset explicitly — otherwise the notebook does it:
+1. (Optional) fetch the dataset explicitly; otherwise the notebook does it for you:
    ```bash
    python -m src.data_loader
    ```
@@ -84,11 +82,11 @@ All randomness is seeded with `random_state = 42` for reproducibility.
 - **Preprocessing** (leakage-safe, inside cross-validation): median imputation +
   standardization for numeric features; most-frequent imputation + one-hot
   encoding for categoricals.
-- **Models**: Decision Tree, Naïve Bayes, k-NN, Random Forest, XGBoost — each
-  tuned with `GridSearchCV` over 5-fold stratified CV, scored on ROC-AUC.
+- **Models**: Decision Tree, Naïve Bayes, k-NN, Random Forest, and XGBoost, each
+  tuned with `GridSearchCV` over 5-fold stratified CV and scored on ROC-AUC.
 - **Evaluation**: Accuracy, Precision, Recall, F1, ROC-AUC; confusion matrices;
   combined ROC and precision-recall curves; feature-importance and SHAP analysis.
-- **Stability & significance**: 5-fold CV ROC-AUC mean±std per model, plus a
+- **Stability and significance**: 5-fold CV ROC-AUC mean and std per model, plus a
   McNemar test between the two top models.
 - **Imbalance study**: baseline vs. SMOTE vs. class-weighting on the best model.
 
